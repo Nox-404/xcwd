@@ -306,6 +306,11 @@ static int cwdOfDeepestChild(processes_t p, long pid)
         if(res) {
             lastRes = res;
             key.ppid = res->pid;
+
+            if (strcmp(res->name, "zsh")) {
+                readPath(lastRes);
+                return 1;
+            }
         }
         res = (struct proc_s *)bsearch(&key, p->ps, p->n,
                 sizeof(struct proc_s), ppidCmp);
